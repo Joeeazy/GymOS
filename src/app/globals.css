@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   GymOS design tokens — palette "Forest + Volt".
+   Ported from design_handoff_gymos/tokens/{index.css,tailwind.config.ts} to
+   Tailwind v4's CSS-first config. Identical palette in all four frontends.
+   Themes switch via <html data-theme="dark">.
+   --------------------------------------------------------------------------- */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --pri: 15 77 46;        /* #0F4D2E  primary fill */
+  --onpri: 255 255 255;   /* #FFFFFF  text on primary (9.90:1) */
+  --priink: 15 77 46;     /* #0F4D2E  primary used as text/links */
+  --acc: 200 240 60;      /* #C8F03C  accent ("volt") — FILL ONLY, never text on light */
+  --onacc: 14 26 18;      /* #0E1A12  text on accent (13.60:1) */
+  --bg: 244 245 239;      /* #F4F5EF */
+  --sur: 255 255 255;     /* #FFFFFF */
+  --sur2: 235 238 229;    /* #EBEEE5  table heads, hover, segmented track */
+  --ink: 14 26 18;        /* #0E1A12  body text (16.30:1 on bg) */
+  --mut: 77 92 82;        /* #4D5C52  secondary text (6.45:1 on bg) */
+  --line: 217 222 211;    /* #D9DED3  borders */
+  --ok: 28 122 67;      --okbg: 227 244 234;    /* #1C7A43 / #E3F4EA  4.70:1 */
+  --warn: 138 90 0;     --warnbg: 251 240 217;  /* #8A5A00 / #FBF0D9  5.24:1 */
+  --err: 180 35 24;     --errbg: 252 231 228;   /* #B42318 / #FCE7E4  5.54:1 */
+}
+
+[data-theme="dark"] {
+  --pri: 200 240 60;      /* #C8F03C  in dark, volt becomes the primary fill */
+  --onpri: 14 26 18;
+  --priink: 200 240 60;   /* 13.23:1 on dark surface */
+  --bg: 11 17 13;         /* #0B110D */
+  --sur: 20 28 23;        /* #141C17 */
+  --sur2: 28 38 32;       /* #1C2620 */
+  --ink: 236 242 236;     /* #ECF2EC */
+  --mut: 163 178 168;     /* #A3B2A8  7.86:1 on surface */
+  --line: 42 54 47;       /* #2A362F */
+  --ok: 111 211 155;    --okbg: 21 41 29;
+  --warn: 242 196 107;  --warnbg: 42 34 16;
+  --err: 255 143 132;   --errbg: 46 22 20;
+}
+
+@theme {
+  /* Handoff breakpoints: sm is the 0–599 default, so there is no `sm:` prefix.
+     `dash` (960) and `wide` (1040) are the two extra thresholds the landing
+     design switches on — hero/nav layout at 1040, display type at 960. */
+  --breakpoint-*: initial;
+  --breakpoint-md: 600px;
+  --breakpoint-dash: 960px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-wide: 1040px;
+  --breakpoint-xl: 1440px;
+
+  --text-display: 48px;
+  --text-display--line-height: 52px;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 800;
+  --text-h1: 32px;
+  --text-h1--line-height: 38px;
+  --text-h1--font-weight: 800;
+  --text-h2: 22px;
+  --text-h2--line-height: 28px;
+  --text-h2--font-weight: 700;
+  --text-h3: 17px;
+  --text-h3--line-height: 24px;
+  --text-h3--font-weight: 600;
+  --text-body: 15px;
+  --text-body--line-height: 22px;
+  --text-small: 13px;
+  --text-small--line-height: 18px;
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-tab: 11px;
+  --text-tab--line-height: 14px;
+
+  --radius-chip: 6px;
+  --radius-ctl: 10px;
+  --radius-card: 16px;
+  --radius-sheet: 24px;
+
+  --shadow-seg: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-frame: 0 24px 48px rgba(0, 0, 0, 0.08);
+  --shadow-phone: 0 30px 60px rgba(0, 0, 0, 0.18);
+
+  --spacing-11: 44px; /* min touch target */
+}
+
+@theme inline {
+  /* `inline` so utilities compile to rgb(var(--pri)) rather than
+     var(--color-pri) — that is what makes the data-theme flip propagate. */
+  --color-pri: rgb(var(--pri));
+  --color-onpri: rgb(var(--onpri));
+  --color-priink: rgb(var(--priink));
+  --color-acc: rgb(var(--acc));
+  --color-onacc: rgb(var(--onacc));
+  --color-bg: rgb(var(--bg));
+  --color-sur: rgb(var(--sur));
+  --color-sur2: rgb(var(--sur2));
+  --color-ink: rgb(var(--ink));
+  --color-mut: rgb(var(--mut));
+  --color-line: rgb(var(--line));
+  --color-ok: rgb(var(--ok));
+  --color-okbg: rgb(var(--okbg));
+  --color-warn: rgb(var(--warn));
+  --color-warnbg: rgb(var(--warnbg));
+  --color-err: rgb(var(--err));
+  --color-errbg: rgb(var(--errbg));
+
+  --font-sans: var(--font-archivo), Archivo, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* Archivo carries a width axis; headlines use 125%, sub-heads 110%. */
+@utility stretch-wide {
+  font-stretch: 125%;
+}
+@utility stretch-mid {
+  font-stretch: 110%;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--bg));
+  color: rgb(var(--ink));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Focus: 2px priink ring, offset 2, on every interactive element. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid rgb(var(--priink));
+  outline-offset: 2px;
+}
+
+.material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-block;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+.icon-fill {
+  font-variation-settings: "FILL" 1;
+}
+
+@keyframes gspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes gshim {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
