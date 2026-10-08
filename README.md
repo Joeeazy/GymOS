@@ -1,85 +1,89 @@
 # GymOS Landing
 
-Public marketing site for GymOS, at `gymos.com`. Next.js 16 (App Router),
-TypeScript, Tailwind v4.
+The public marketing site for **GymOS** — gym management software built for
+Kenya.
 
-Built to match `design_handoff_gymos/designs/GymOS Landing.dc.html`. Where that
-design and the planning docs disagree, the docs win for tiers, roles, fields and
-routes, and the design wins for visual treatment — the rule set in the handoff
-README.
+**Live:** https://gymos-chi-eight.vercel.app
 
-## Running it
+![GymOS landing page](.github/media/home-light.png)
+
+## What GymOS is
+
+Most gyms in Kenya already get paid by M‑Pesa. The hard part is everything
+after the payment: matching a confirmation SMS to a member, writing it in a
+book, remembering who has expired, and chasing renewals one WhatsApp at a time.
+Imported gym software doesn't help much — it prices in dollars, assumes card
+billing, and treats M‑Pesa as an afterthought.
+
+GymOS starts from the other end. A few of the things that follow from that:
+
+- Members renew from their own phone with an M‑Pesa prompt, and the
+  confirmation code lands on the right membership automatically.
+- QR check-in at the front desk, from a web app that installs without the Play
+  Store.
+- Every amount in KES, members signing in with their phone number, and counties
+  and receipts that follow Kenyan conventions.
+
+There is more to it than that — the site itself is the better tour.
+
+<details>
+<summary>Dark mode</summary>
+
+![GymOS landing page in dark mode](.github/media/home-dark.png)
+
+</details>
+
+## This repo
+
+Just the marketing site. Next.js 16 (App Router), TypeScript and Tailwind v4,
+with no backend and no database — every route prerenders as static HTML.
 
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # all 7 routes prerender as static content
+npm run build
 npm run lint
 ```
 
-## Routes
+### Pages
 
-| Route | Design page |
-|---|---|
-| `/` | Home — hero, proof strip, role-switching dashboard, M‑Pesa, closing CTA |
-| `/features` | Features, 4 groups |
-| `/pricing` | Tier cards + the full comparison matrix |
-| `/how-it-works` | 6 numbered steps |
-| `/why-kenya` | Long-form copy + 3 principle cards |
-| `/faq` | Accordion |
-| `/start` | 6-field signup form → "Check your email" confirmation |
+`/` · `/features` · `/pricing` · `/how-it-works` · `/why-kenya` · `/faq` ·
+`/start`
 
-## Design tokens
+### Theming
 
-`src/app/globals.css` holds the Forest + Volt palette, type scale, radii and
-shadows, ported from `design_handoff_gymos/tokens/` to Tailwind v4's CSS-first
-config. The same palette is meant to be identical across all four frontends.
+Light and dark both ship. The theme lives on `<html data-theme>`, persists to
+`localStorage` under `gymos-theme`, and is applied by a small inline script
+before first paint so a stored dark theme never flashes light — see
+`src/lib/theme.ts`.
 
-Themes switch on `<html data-theme>`; the choice persists to `localStorage`
-under `gymos-theme` and is applied by an inline script before first paint, so a
-stored dark theme never flashes light. See `src/lib/theme.ts`.
+Colours, type scale, radii and shadows are defined once as tokens in
+`src/app/globals.css`, using Tailwind v4's CSS-first config. Breakpoints are
+`md` 600, `lg` 1024 and `xl` 1440, plus `dash` 960 and `wide` 1040 for the two
+extra thresholds this layout switches on; below 600 is the unprefixed default.
 
-Breakpoints follow the handoff: `sm` is the 0–599 default (no prefix), `md`
-600, `lg` 1024, `xl` 1440, plus `dash` 960 and `wide` 1040 for the two extra
-thresholds the landing design switches on.
+### SEO
 
-## SEO
+`src/app/sitemap.ts` and `src/app/robots.ts` are generated from the same nav
+list the header renders, so a new route only has to be added in one place.
+Those two and `metadataBase` all read `SITE_URL` from `src/lib/site.ts`, which
+resolves in this order:
 
-`src/app/sitemap.ts` and `src/app/robots.ts` are generated from the same `NAV`
-list the header uses, so a new route only has to be added in one place.
-`metadataBase` and both of those read `SITE_URL` from `src/lib/site.ts`, which
-takes `NEXT_PUBLIC_SITE_URL` and falls back to `https://gymos.com`.
+1. `NEXT_PUBLIC_SITE_URL`, if set
+2. the current Vercel production domain
+3. `https://gymos.com`
 
-> **Open:** CLAUDE.md and this README put the site at `gymos.com`, but the
-> design's copy writes `gymos.co.ke` in the footer and in the demo subdomain
-> (`simbafitness.gymos.co.ke`). The visible copy is still the design's; only the
-> canonical origin follows the docs. Worth settling before launch.
+Set `NEXT_PUBLIC_SITE_URL` once the production domain is pointed at the site.
 
-## Content
+## Deployment
 
-Copy lives in `src/lib/content.ts`, transcribed from the design, which the
-handoff marks as final. "M‑Pesa" uses U+2011 NON-BREAKING HYPHEN throughout.
+Deployed on **Vercel** from this repo. A move to AWS is planned later; nothing
+here is tied to a host beyond the standard Next.js build.
 
-Tiers live in `src/lib/pricing.ts` and come from `docs/07-pricing-tiers.md`, not
-from the design's placeholder Starter/Growth/Pro set.
+## Notes
 
-## Known gaps
-
-- `src/components/mocks/` stands in for the live `dc-import` embeds of the
-  Member PWA and Club Dashboard. Those repos are not built yet, so the phone and
-  browser frames render token-accurate reconstructions from the handoff's screen
-  specs. Replace them with real screenshots once the apps exist — the frames
-  themselves are already to spec.
-- `/start` has no backend. Submitting shows the design's confirmation state.
-- **Design system:** in dark, `--pri` and `--acc` are both volt, so any accent
-  fill on a primary surface disappears. This site works around it with
-  `dark:`-only overrides on the pricing card, the M‑Pesa band and the membership
-  card in the phone mock. The same collapse will hit the member PWA's membership
-  hero and every "money" button that sits on a primary surface, so it is worth
-  fixing in `tokens/` rather than per repo.
-- Also from that: in dark a primary button and a money button are the same
-  colour, told apart only by the `phone_iphone` icon and the bolder weight. That
-  is what the handoff's Button spec produces; left as-is rather than invented
-  around here.
-
-Deploy target per `docs/10-repo-structure.md`: GitHub → AWS Amplify.
+- The phone and browser frames on the home page show placeholder UI. They get
+  swapped for real screenshots of the member app and the staff dashboard once
+  those ship — the frames themselves are already final.
+- The form on `/start` has no backend yet. Submitting it shows the confirmation
+  state without sending anything.

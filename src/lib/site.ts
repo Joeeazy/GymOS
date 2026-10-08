@@ -1,12 +1,17 @@
 /**
- * Canonical origin for metadata, sitemap and robots.
+ * Canonical origin for metadata, the sitemap and robots.txt.
  *
- * CLAUDE.md and this repo's README put the marketing site at `gymos.com`
- * (gyms live at `<slug>.gymos.com`), while the design's copy writes
- * `gymos.co.ke` in the footer and in the demo subdomain. The docs win for
- * routing, so that is the default — override per environment rather than
- * hard-coding either one.
+ * Set NEXT_PUBLIC_SITE_URL in the hosting environment to pin it. Without that
+ * it follows the current Vercel production domain, so the sitemap and robots
+ * stay correct on preview infrastructure, and only falls back to the project
+ * domain as a last resort.
  */
+const vercelProduction = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : undefined;
+
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://gymos.com"
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  vercelProduction ??
+  "https://gymos.com"
 ).replace(/\/+$/, "");
