@@ -1,11 +1,11 @@
-# GymOS Landing
+<p align="center"><img width="160" src=".github/media/icon.svg"></p>
 
 The public marketing site for **GymOS** — gym management software built for
 Kenya.
 
 **Live:** https://gymos-chi-eight.vercel.app
 
-![GymOS landing page](.github/media/home-light.png)
+![GymOS landing page in dark mode](.github/media/home-dark.png)
 
 ## What GymOS is
 
@@ -25,13 +25,6 @@ GymOS starts from the other end. A few of the things that follow from that:
   and receipts that follow Kenyan conventions.
 
 There is more to it than that — the site itself is the better tour.
-
-<details>
-<summary>Dark mode</summary>
-
-![GymOS landing page in dark mode](.github/media/home-dark.png)
-
-</details>
 
 ## This repo
 
