@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { THEME_BOOTSTRAP } from "@/lib/theme";
+import { SITE_URL } from "@/lib/site";
 
 /** Archivo is used across its width axis: 125% for headlines, 110% for sub-heads. */
 const archivo = Archivo({
@@ -21,6 +22,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "GymOS — gym management for Kenya",
     template: "%s · GymOS",
@@ -41,6 +43,7 @@ export const metadata: Metadata = {
     siteName: "GymOS",
     locale: "en_KE",
     type: "website",
+    url: "/",
   },
 };
 

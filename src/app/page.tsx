@@ -66,7 +66,7 @@ export default function HomePage() {
           </div>
           {MPESA_POINTS.map((m) => (
             <div key={m.title} className="flex flex-col gap-2.5">
-              <Icon name={m.icon} className="text-acc !text-[32px]" />
+              <Icon name={m.icon} className="text-acc dark:text-onpri !text-[32px]" />
               <span className="text-[19px] font-bold">{m.title}</span>
               <span className="text-[15px] leading-[1.55]">{m.detail}</span>
             </div>

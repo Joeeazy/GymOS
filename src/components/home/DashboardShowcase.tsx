@@ -16,8 +16,8 @@ export function DashboardShowcase() {
         <SectionTitle>One dashboard. Each person sees their part.</SectionTitle>
         <p className="text-mut m-0 text-[17px] leading-[1.55]">
           The front desk scans and registers. Trainers write plans. Your accountant
-          reconciles. You see revenue, expenses and who&apos;s about to lapse. This is the
-          live dashboard; switch the role below.
+          reconciles. You see revenue, expenses and who&apos;s about to lapse. Switch the
+          role below to see what each one gets.
         </p>
       </div>
 

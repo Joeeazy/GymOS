@@ -43,6 +43,18 @@ Breakpoints follow the handoff: `sm` is the 0–599 default (no prefix), `md`
 600, `lg` 1024, `xl` 1440, plus `dash` 960 and `wide` 1040 for the two extra
 thresholds the landing design switches on.
 
+## SEO
+
+`src/app/sitemap.ts` and `src/app/robots.ts` are generated from the same `NAV`
+list the header uses, so a new route only has to be added in one place.
+`metadataBase` and both of those read `SITE_URL` from `src/lib/site.ts`, which
+takes `NEXT_PUBLIC_SITE_URL` and falls back to `https://gymos.com`.
+
+> **Open:** CLAUDE.md and this README put the site at `gymos.com`, but the
+> design's copy writes `gymos.co.ke` in the footer and in the demo subdomain
+> (`simbafitness.gymos.co.ke`). The visible copy is still the design's; only the
+> canonical origin follows the docs. Worth settling before launch.
+
 ## Content
 
 Copy lives in `src/lib/content.ts`, transcribed from the design, which the
@@ -59,5 +71,15 @@ from the design's placeholder Starter/Growth/Pro set.
   specs. Replace them with real screenshots once the apps exist — the frames
   themselves are already to spec.
 - `/start` has no backend. Submitting shows the design's confirmation state.
+- **Design system:** in dark, `--pri` and `--acc` are both volt, so any accent
+  fill on a primary surface disappears. This site works around it with
+  `dark:`-only overrides on the pricing card, the M‑Pesa band and the membership
+  card in the phone mock. The same collapse will hit the member PWA's membership
+  hero and every "money" button that sits on a primary surface, so it is worth
+  fixing in `tokens/` rather than per repo.
+- Also from that: in dark a primary button and a money button are the same
+  colour, told apart only by the `phone_iphone` icon and the bolder weight. That
+  is what the handoff's Button spec produces; left as-is rather than invented
+  around here.
 
 Deploy target per `docs/10-repo-structure.md`: GitHub → AWS Amplify.

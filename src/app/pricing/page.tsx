@@ -29,6 +29,8 @@ export default function PricingPage() {
         {TIERS.map((t) => (
           <div
             key={t.name}
+            // In dark --pri and --acc are both volt, so acc on this card would
+            // disappear; the dark: overrides swap it to onpri. Light is unchanged.
             className={`border-line flex flex-col gap-4 rounded-[20px] border p-6 ${
               t.popular ? "bg-pri text-onpri" : "bg-sur text-ink"
             }`}
@@ -36,7 +38,7 @@ export default function PricingPage() {
             <div className="flex items-center justify-between gap-2">
               <span className="stretch-mid text-[20px] font-extrabold">{t.name}</span>
               {t.popular && (
-                <span className="bg-acc text-onacc rounded-full px-2.5 py-1 text-xs font-bold whitespace-nowrap">
+                <span className="bg-acc text-onacc dark:bg-onpri dark:text-pri rounded-full px-2.5 py-1 text-xs font-bold whitespace-nowrap">
                   Most gyms
                 </span>
               )}
@@ -52,7 +54,7 @@ export default function PricingPage() {
               href={START_HREF}
               className={`rounded-ctl flex h-[46px] items-center justify-center text-[15px] font-bold whitespace-nowrap transition-[filter] duration-150 ${
                 t.popular
-                  ? "bg-acc text-onacc hover:brightness-95"
+                  ? "bg-acc text-onacc dark:bg-onpri dark:text-pri hover:brightness-95"
                   : "bg-pri text-onpri hover:brightness-110"
               }`}
             >
